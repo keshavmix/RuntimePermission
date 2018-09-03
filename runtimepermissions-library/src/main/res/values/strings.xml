@@ -3,4 +3,5 @@
     <string name="grant">GRANT</string>
     <string name="settings">SETTINGS</string>
     <string name="permission_required">You have previously denied the required permissions. Click GRANT to allow required permission.</string>
+    <string name="permission_blocked">You have previously blocked the required permissions. Click SETTINGS to enable required permission.</string>
 </resources>

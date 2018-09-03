@@ -1,11 +1,16 @@
 package com.way2bay.runtimepermissions
 
 import android.app.Activity
+import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import org.jetbrains.annotations.NotNull
+import android.support.v7.app.AlertDialog
+import android.util.Log
 import java.util.*
 
 class PermissionManager {
@@ -14,8 +19,13 @@ class PermissionManager {
     private var mActivity: Activity
     private var mOnPermissionResultListener: OnPermissionResultListener? = null
     private var mPermissionBlocked: Boolean = false
+    private var mOnPermissionsGrantedFunction: (() -> Unit)? = null
+    private var mOnPermissionsDeniedFunction: (() -> Unit)? = null
+    private var mOnPermissionsBlockedFunction: (() -> Unit)? = null
+    private var enableLogs: Boolean = false
+    private val TAG: String = "Runtime Permission"
 
-    constructor(activity: Activity) {
+    constructor(activity: Activity, onPermissionGrantedFunction: () -> Unit) {
         this.mActivity = activity
 
         try {
@@ -27,12 +37,31 @@ class PermissionManager {
 
         }
 
+        this.mOnPermissionsGrantedFunction = onPermissionGrantedFunction
     }
 
-    constructor(activity: Activity,permissions: Array<String>) {
+    constructor(activity: Activity, permissions: Array<String>) {
         this.mActivity = activity
 
         Collections.addAll(mPermissionsNeeded, *permissions)
+    }
+
+    fun enableLogs(enableLogs: Boolean) {
+        this@PermissionManager.enableLogs = enableLogs
+    }
+
+    fun executeOnPermissionGranted(func: () -> Unit) {
+        this@PermissionManager.mOnPermissionsGrantedFunction = func
+    }
+
+
+    fun executeOnPermissionDenied(func: () -> Unit) {
+        this@PermissionManager.mOnPermissionsDeniedFunction = func
+    }
+
+
+    fun executeOnPermissionBlocked(func: () -> Unit) {
+        this@PermissionManager.mOnPermissionsBlockedFunction = func
     }
 
     fun setPermissionListener(onPermissionResultListener: OnPermissionResultListener) {
@@ -121,24 +150,67 @@ class PermissionManager {
     }
 
     private fun onPermissionDenied() {
-        if (mOnPermissionResultListener != null)
+
+        if (enableLogs)
+            Log.d(TAG, "onPermissionDenied")
+
+        if (mOnPermissionResultListener == null && mOnPermissionsDeniedFunction == null)
+            AlertDialog.Builder(mActivity)
+                    .setMessage(R.string.permission_required)
+                    .setPositiveButton(R.string.grant, DialogInterface.OnClickListener { dialogInterface, i -> checkAndRequestPermissions() })
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .setCancelable(false)
+                    .show()
+        else if (mOnPermissionResultListener != null)
             mOnPermissionResultListener!!.onPermissionDenied(mPermissionsDenied)
+        else
+            mOnPermissionsDeniedFunction?.invoke()
     }
 
     private fun onPermissionBlocked() {
-        if (mOnPermissionResultListener != null)
+        if (enableLogs)
+            Log.d(TAG, "onPermissionBlocked")
+
+        if (mOnPermissionResultListener == null && mOnPermissionsBlockedFunction == null)
+            AlertDialog.Builder(mActivity)
+                    .setMessage(R.string.permission_blocked)
+                    .setPositiveButton(R.string.grant, DialogInterface.OnClickListener { dialogInterface, i ->
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                Uri.fromParts("package", mActivity.packageName, null))
+                        mActivity.startActivityForResult(intent, PermissionManager.REQUEST_PERMISSION_SETTINGS)
+
+                    })
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .setCancelable(false)
+                    .show()
+        else if (mOnPermissionResultListener != null)
             mOnPermissionResultListener!!.onPermissionBlocked(mPermissionsDenied)
+        else
+            mOnPermissionsBlockedFunction?.invoke()
+
         mPermissionBlocked = true
     }
 
     private fun onPermissionGranted() {
+
+        if (enableLogs)
+            Log.d(TAG, "onPermissionGranted")
+
         if (mOnPermissionResultListener != null)
             mOnPermissionResultListener!!.onPermissionGranted()
+        else
+            mOnPermissionsGrantedFunction?.invoke()
+
+        if (mOnPermissionResultListener == null && mOnPermissionsGrantedFunction == null)
+            Log.e(TAG, "onPermissionGranted method is not provided or implemented.")
 
         mPermissionBlocked = false
+
+
     }
 
     companion object {
+        val REQUEST_PERMISSION_SETTINGS = 20
 
         private val PERMISSION_REQUEST = 10
     }
