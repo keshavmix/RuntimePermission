@@ -1,22 +1,52 @@
 # RuntimePermission Library
+[![](https://jitpack.io/v/keshavmix/RuntimePermission.svg)](https://jitpack.io/#keshavmix/RuntimePermission)
+[![Platform](https://img.shields.io/badge/platform-android-blue.svg)](http://developer.android.com/index.html)
+[![API](https://img.shields.io/badge/API-14%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=15)
+[![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 This is one of the most easy to use and developer friendly library for Android.
 
-## Integration
-Add the below in your root build.gradle at the end of repository
+### Installation
 
-##### Step 1. Add the JitPack repository to your build file 
-	allprojects {
+* **Gradle**
+
+	##### Step 1. Add it in your root build.gradle at the end of repositories:
+	```gradle
+  allprojects {
 		repositories {
 			...
 			maven { url 'https://jitpack.io' }
 		}
 	}
-  
-  ##### Step 2. Add the dependency
- 	dependencies {
+	```
+
+	 ##### Step 2. Add the dependency in your app build.gradle
+	```gradle
+  dependencies {
 	        implementation 'com.github.keshavmix:RuntimePermission:1.0'
 	}
+	```
+
+* **Maven**
+
+	##### Step 1. Add the JitPack repository to your build file
+	```gradle
+	<repositories>
+		<repository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+	```
+
+	##### Step 2. Add the dependency
+	```gradle
+  	<dependency>
+	    <groupId>com.github.keshavmix</groupId>
+	    <artifactId>RuntimePermission</artifactId>
+	    <version>V1.0</version>
+	  </dependency>
+	```
 	
 ### Usage
 You can create an instance of `PermissionManager` in your kotlin or java file in order to add runtime permissions.
