@@ -208,7 +208,6 @@ class PermissionManager {
     }
 
     companion object {
-        @JvmField
-        val REQUEST_PERMISSION_SETTINGS = 20
+        const val REQUEST_PERMISSION_SETTINGS = 20
     }
 }
