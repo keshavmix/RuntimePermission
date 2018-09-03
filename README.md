@@ -75,7 +75,7 @@ Step 4: Call checkAndRequestPermissions() method in onCreate or when you want to
 mPermissionManager.checkAndRequestPermissions()
 ```
 
-Step 5: Call checkPermissionResult() method with same parameters (requestCode, permissions, grantResults) respectively which received in onRequestPermissionsResult method.
+Step 5: Call ```checkPermissionResult()``` method with same parameters (requestCode, permissions, grantResults) respectively which received in onRequestPermissionsResult method.
 ```kotlin
 override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
 	super.onRequestPermissionsResult(requestCode, permissions, grantResults)
