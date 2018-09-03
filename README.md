@@ -44,8 +44,9 @@ This is one of the most easy to use and user friendly library for Android Runtim
   	<dependency>
 	    <groupId>com.github.keshavmix</groupId>
 	    <artifactId>RuntimePermission</artifactId>
-	    <version>V1.0</version>
-	  </dependency>
+	    <version>1.0</version>
+	</dependency>
+
 	```
 	
 ### Usage
