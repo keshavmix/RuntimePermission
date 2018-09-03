@@ -101,7 +101,7 @@ mPermissionManager.setPermissionListener(object : OnPermissionResultListener {
 })
 ```	
 	
-Step 4: Call checkAndRequestPermissions() method in onCreate or when you want to access features which require permissions.
+Step 4: Call ```checkAndRequestPermissions()``` method in onCreate or when you want to access features which require permissions.
 ```kotlin
 mPermissionManager.checkAndRequestPermissions()
 ```
