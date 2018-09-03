@@ -14,6 +14,8 @@ import android.util.Log
 import java.util.*
 
 class PermissionManager {
+
+    private val PERMISSION_REQUEST = 10
     private val mPermissionsNeeded = ArrayList<String>()
     private val mPermissionsDenied = ArrayList<String>()
     private var mActivity: Activity
@@ -203,13 +205,10 @@ class PermissionManager {
             Log.e(TAG, "onPermissionGranted method is not provided or implemented.")
 
         mPermissionBlocked = false
-
-
     }
 
     companion object {
+        @JvmField
         val REQUEST_PERMISSION_SETTINGS = 20
-
-        private val PERMISSION_REQUEST = 10
     }
 }
