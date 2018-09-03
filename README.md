@@ -1,7 +1,7 @@
 # RuntimePermission Library
 [![](https://jitpack.io/v/keshavmix/RuntimePermission.svg)](https://jitpack.io/#keshavmix/RuntimePermission)
 [![Platform](https://img.shields.io/badge/platform-android-blue.svg)](http://developer.android.com/index.html)
-[![API](https://img.shields.io/badge/API-14%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=15)
+[![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=15)
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 This is one of the most easy to use and user friendly library for Android Runtime Permissions.
