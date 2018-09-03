@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //initialize permission manager with required permissions
-        mPermissionManager = PermissionManager(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE))
+        mPermissionManager = PermissionManager(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA))
 
         //enabled logging
         mPermissionManager.enableLogs(true)
@@ -61,7 +61,13 @@ class MainActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         //set requestPermissionsResult params to check permissionManager
-        mPermissionManager.checkPermissionResult(requestCode, permissions, grantResults)
+        mPermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        //call OnActivityResult on permission manager to recheck when user returned from Settings screen.
+        mPermissionManager.onActivityResult(requestCode)
     }
 
     fun permissionsGranted() {
@@ -73,7 +79,7 @@ class MainActivity : AppCompatActivity() {
     fun permissionsBlocked() {
         AlertDialog.Builder(this)
                 .setMessage(com.way2bay.runtimepermissions.R.string.permission_blocked)
-                .setPositiveButton(com.way2bay.runtimepermissions.R.string.grant, DialogInterface.OnClickListener { dialogInterface, i ->
+                .setPositiveButton(com.way2bay.runtimepermissions.R.string.settings, DialogInterface.OnClickListener { dialogInterface, i ->
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
                             Uri.fromParts("package", packageName, null))
                     startActivityForResult(intent, PermissionManager.REQUEST_PERMISSION_SETTINGS)
