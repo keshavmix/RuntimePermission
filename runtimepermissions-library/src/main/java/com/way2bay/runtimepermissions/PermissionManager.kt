@@ -25,7 +25,7 @@ class PermissionManager {
     private var enableLogs: Boolean = false
     private val TAG: String = "Runtime Permission"
 
-    constructor(activity: Activity, onPermissionGrantedFunction: () -> Unit) {
+    constructor(activity: Activity) {
         this.mActivity = activity
 
         try {
@@ -36,8 +36,6 @@ class PermissionManager {
         } catch (ignored: Exception) {
 
         }
-
-        this.mOnPermissionsGrantedFunction = onPermissionGrantedFunction
     }
 
     constructor(activity: Activity, permissions: Array<String>) {
