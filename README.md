@@ -59,59 +59,96 @@ Step 1: Declare member variable for PermissionManager.
 lateinit var mPermissionManager: PermissionManager
 ```
 
-Step 2: Initialize the PermissionManager in onCreate method of your activity with Context of activity & array of required permissions.
+Step 2: Initialize the PermissionManager in onCreate method of your activity with Context of activity.
 
 ```kotlin
 override fun onCreate(savedInstanceState: Bundle?) {
 	...
-	mPermissionManager = PermissionManager(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+	mPermissionManager = PermissionManager(this)
+}
+```
+
+or
+
+Initialize the PermissionManager in onCreate method of your activity with Context of activity & array of required permissions.
+```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+	...
+	mPermissionManager =  PermissionManager(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,
 					     Manifest.permission.CAMERA))
 }
 ```
 
-Step 3: Set ```OnPermissionResultListener``` to PermissionManager to receive callbacks.
+Step 3: You can also add permissions using below method.
+```kotlin 
+mPermissionManager.addPermission(Manifest.permission.CAMERA)
+```
+
+Alternatively, you can set array of permissions using below method.
+
+```kotlin
+mPermissionManager.setPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
+```
+
+If you want to remove permission, simply use the below method.
+```kotlin 
+mPermissionManager.removePermission(Manifest.permission.CAMERA)
+```
+
+Step 4: Set ```OnPermissionResultListener``` to PermissionManager to receive callbacks.
 	You are expected to write you code in ```onPermissionGranted()``` method as this method will be excuted after user granted the 		required permissions. In case user denied the permissions, you are required to show alert dialog or snackbar to ask required permissions again with ```mPermissionManager.checkAndRequestPermissions()``` method. In case user opted 'Do not ask again' checkbox, you are also required to show an alert dialog in ```onPermissionBlocked``` method to inform and navigate user to settings screen to enable blocked permissions.
 
 ```kotlin
 mPermissionManager.setPermissionListener(object : OnPermissionResultListener {
     override fun onPermissionGranted() {
-
 	//code to execute
-
     }
 
     override fun onPermissionDenied(permissions: ArrayList<String>) {
 	//show alert dialog to ask permission again.
-
-	AlertDialog.Builder(this@MainActivity)
-		.setMessage(R.string.permission_required)
-		.setPositiveButton(R.string.grant, 
-		DialogInterface.OnClickListener { dialogInterface, i -> mPermissionManager.checkAndRequestPermissions() })
-		.setNegativeButton(android.R.string.cancel, null)
-		.setCancelable(false)
-		.show()
-
     }
 
     override fun onPermissionBlocked(permissions: ArrayList<String>) {
 	//Permission was denied and user checked Do not ask again. 
 	//Inform and navigate user to settings screen to enable permissions.
-
     }
 })
-```	
-	
-Step 4: Call ```checkAndRequestPermissions()``` method in onCreate or when you want to access features which require permissions.
-```kotlin
-mPermissionManager.checkAndRequestPermissions()
 ```
 
-Step 5: Call ```checkPermissionResult()``` method with same parameters (requestCode, permissions, grantResults) respectively which received in onRequestPermissionsResult method.
+Alternatively, you can use the below method to pass function or block code to be executed when a specific callback received.
+```kotlin
+ 	//set method to be executed when permission granted by user.
+        mPermissionManager.executeOnPermissionGranted { run { //code to execute } }
+	//set method to be executed when permission denied by user.
+        mPermissionManager.executeOnPermissionDenied { run { //show alert dialog to ask permission again. } }
+        //set method to be executed when permission blocked by user.
+        mPermissionManager.executeOnPermissionBlocked { run { //Permission was denied and user checked Do not ask again. 
+	//Inform and navigate user to settings screen to enable permissions. } }
+```	
+
+####Important: Preference will be given to ```OnPermissionResultListener``` if implemented. 
+If ```OnPermissionResultListener``` not implemented then default alert dialogs will be displayed by the PermissionManager in case of permission blocked or denied by user.
+
+Step 5: Call ```onRequestPermissionsResult()``` method with same parameters ```(requestCode, permissions, grantResults)``` respectively which received in onRequestPermissionsResult method.
 ```kotlin
 override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
 	super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-	mPermissionManager.checkPermissionResult(requestCode, permissions, grantResults)
+	mPermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults)
 }
+```
+
+Step 6: Call ```onActivityResult()``` method with same parameter ```(requestCode)``` which received in onActivityResult method of activity. Permissionmanager will handle and recheck when user returned from Settings screen after enabling required permissions.
+```kotlin
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        //call OnActivityResult on permission manager to recheck when user returned from Settings screen.
+        mPermissionManager.onActivityResult(requestCode)
+    }
+```
+
+Finally.. Step 7: Call ```checkAndRequestPermissions()``` method in onCreate or where ever you want to access features which require permissions.
+```kotlin
+mPermissionManager.checkAndRequestPermissions()
 ```
 
 ### Licence
