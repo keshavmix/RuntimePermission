@@ -6,8 +6,6 @@ group='com.github.keshavmix'
 android {
     compileSdkVersion 27
 
-
-
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 27
