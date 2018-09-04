@@ -120,13 +120,13 @@ mPermissionManager.setPermissionListener(object : OnPermissionResultListener {
 
 Alternatively, you can use the below method to pass function or block code to be executed when a specific callback received.
 ```kotlin
- 	//set method to be executed when permission granted by user.
-        mPermissionManager.executeOnPermissionGranted { run { //code to execute } }
-	//set method to be executed when permission denied by user.
-        mPermissionManager.executeOnPermissionDenied { run { //show alert dialog to ask permission again. } }
-        //set method to be executed when permission blocked by user.
-        mPermissionManager.executeOnPermissionBlocked { run { //Permission was denied and user checked Do not ask again. 
-	//Inform and navigate user to settings screen to enable permissions. } }
+//set method to be executed when permission granted by user.
+mPermissionManager.executeOnPermissionGranted { run { //code to execute } }
+//set method to be executed when permission denied by user.
+mPermissionManager.executeOnPermissionDenied { run { //show alert dialog to ask permission again. } }
+//set method to be executed when permission blocked by user.
+mPermissionManager.executeOnPermissionBlocked { run { //Permission was denied and user checked Do not ask again. 
+//Inform and navigate user to settings screen to enable permissions. } }
 ```	
 
 #### Important Notes:
@@ -145,18 +145,24 @@ override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<Str
 
 ##### Step 6:
 Call ```onActivityResult()``` method with same parameter ```(requestCode)``` which received in onActivityResult method of activity. Permissionmanager will handle and recheck when user returned from Settings screen after enabling required permissions.
-```kotlin
+```kotlin 
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         //call OnActivityResult on permission manager to recheck when user returned from Settings screen.
         mPermissionManager.onActivityResult(requestCode)
-    }
+}
 ```
 
 ##### Step 7:
 Call ```checkAndRequestPermissions()``` method in onCreate or where ever you want to access features which require permissions.
 ```kotlin
-mPermissionManager.checkAndRequestPermissions()
+mPermissionManager.checkAndRequestPermissions() 
+```
+
+##### Optional
+You can enable or disable logs in PermissionManager using below line code. By default, logs are desiabled.
+```kotlin
+mPermissionManager.enableLogs(true) 
 ```
 
 ### Licence
