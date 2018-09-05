@@ -99,7 +99,7 @@ mPermissionManager.removePermission(Manifest.permission.CAMERA)
 ```
 
 ##### Step 4:
-Set ```OnPermissionResultListener``` to PermissionManager to receive callbacks.	You are expected to write you code in ```onPermissionGranted()``` method as this method will be excuted after user granted the 		required permissions. In case user denied the permissions, you are required to show alert dialog or snackbar to ask required permissions again with ```mPermissionManager.checkAndRequestPermissions()``` method. In case user opted 'Do not ask again' checkbox, you are also required to show an alert dialog in ```onPermissionBlocked``` method to inform and navigate user to settings screen to enable blocked permissions.
+Set ```OnPermissionResultListener``` to PermissionManager to receive callbacks.	You are expected to write your code in ```onPermissionGranted()``` method as this method will be executed after user granted the required permissions. In case user denied the permissions, you are required to show alert dialog or snackbar to ask required permissions again with ```mPermissionManager.checkAndRequestPermissions()``` method. In case user opted 'Do not ask again' checkbox, you are also required to show an alert dialog in ```onPermissionBlocked``` method to inform and navigate user to settings screen to enable blocked permissions.
 
 ```kotlin
 mPermissionManager.setPermissionListener(object : OnPermissionResultListener {
@@ -146,7 +146,7 @@ override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<Str
 ```
 
 ##### Step 6:
-Call ```onActivityResult()``` method with same parameter ```(requestCode)``` which received in onActivityResult method of activity. Permissionmanager will handle and recheck when user returned from Settings screen after enabling required permissions.
+Call ```onActivityResult()``` method with same parameter ```(requestCode)``` which is received in onActivityResult method of activity. Permissionmanager will handle and recheck when user returned from Settings screen after enabling required permissions.
 ```kotlin 
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
