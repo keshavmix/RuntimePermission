@@ -122,8 +122,10 @@ Alternatively, you can use the below method to pass function or block code to be
 ```kotlin
 //set method to be executed when permission granted by user.
 mPermissionManager.executeOnPermissionGranted { run { //code to execute } }
+
 //set method to be executed when permission denied by user.
 mPermissionManager.executeOnPermissionDenied { run { //show alert dialog to ask permission again. } }
+
 //set method to be executed when permission blocked by user.
 mPermissionManager.executeOnPermissionBlocked { run { //Permission was denied and user checked Do not ask again. 
 //Inform and navigate user to settings screen to enable permissions. } }
