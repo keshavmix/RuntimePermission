@@ -2,6 +2,7 @@
 [![](https://jitpack.io/v/keshavmix/RuntimePermission.svg)](https://jitpack.io/#keshavmix/RuntimePermission)
 [![Platform](https://img.shields.io/badge/platform-android-blue.svg)](http://developer.android.com/index.html)
 [![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=15)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Runtime%20Permission-orange.svg?style=flat)](https://android-arsenal.com/details/1/7097)
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 This is one of the most easy to use and developer friendly library to implement Runtime Permissions in Android apps. Runtime Permissions are introduced in Android Marshmallow (API level 23), where app will ask user for their permissions to access specific features. This library will also works in API level 23 and below. For this, you are still required to declare your permissions in AndroidManifest.xml.
