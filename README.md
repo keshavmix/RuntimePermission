@@ -147,7 +147,7 @@ override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<Str
 ```
 
 ##### Step 6:
-Call ```onActivityResult()``` method with same parameter ```(requestCode)``` which is received in onActivityResult method of activity. Permissionmanager will handle and recheck when user returned from Settings screen after enabling required permissions.
+Call ```onActivityResult()``` method with same parameter ```(requestCode)``` which is received in onActivityResult method of activity. PermissionManager will handle and recheck when user returned from Settings screen after enabling required permissions.
 ```kotlin 
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
