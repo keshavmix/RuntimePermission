@@ -1,4 +1,4 @@
-# Runtime Permission Library
+#Runtime Permission Library
 [![](https://jitpack.io/v/keshavmix/RuntimePermission.svg)](https://jitpack.io/#keshavmix/RuntimePermission)
 [![Platform](https://img.shields.io/badge/platform-android-blue.svg)](http://developer.android.com/index.html)
 [![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=15)
@@ -7,9 +7,9 @@
 
 This is one of the most easy to use and developer friendly library to implement Runtime Permissions in Android apps. Runtime Permissions are introduced in Android Marshmallow (API level 23), where app will ask user for their permissions to access specific features. This library will also works in API level 23 and below. For this, you are still required to declare your permissions in AndroidManifest.xml.
 
-### Installation
+###Installation
 
-* **Gradle**
+***Gradle**
 
 	##### Step 1. Add it in your root build.gradle at the end of repositories:
 	```gradle
@@ -28,7 +28,7 @@ This is one of the most easy to use and developer friendly library to implement 
 	}
 	```
 
-* **Maven**
+***Maven**
 
 	##### Step 1. Add the JitPack repository to your build file
 	```gradle
@@ -50,18 +50,18 @@ This is one of the most easy to use and developer friendly library to implement 
 
 	```
 	
-### Usage
+###Usage
 You can create an instance of `PermissionManager` in your kotlin or java file in order to add runtime permissions.
 
-### Kotlin sample
-##### Step 1:
+###Kotlin sample
+#####Step 1:
 Declare member variable for PermissionManager.
 
 ```kotlin
 lateinit var mPermissionManager: PermissionManager
 ```
 
-##### Step 2:
+#####Step 2:
 Initialize the PermissionManager in onCreate method of your activity with Context of activity.
 
 ```kotlin
@@ -82,7 +82,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 }
 ```
 
-##### Step 3:
+#####Step 3:
 You can also add permissions using below method.
 ```kotlin 
 mPermissionManager.addPermission(Manifest.permission.CAMERA)
@@ -99,7 +99,7 @@ If you want to remove permission, simply use the below method.
 mPermissionManager.removePermission(Manifest.permission.CAMERA)
 ```
 
-##### Step 4:
+#####Step 4:
 Set ```OnPermissionResultListener``` to PermissionManager to receive callbacks.	You are expected to write your code in ```onPermissionGranted()``` method as this method will be executed after user granted the required permissions. In case user denied the permissions, you are required to show alert dialog or snackbar to ask required permissions again with ```mPermissionManager.checkAndRequestPermissions()``` method. In case user opted 'Do not ask again' checkbox, you are also required to show an alert dialog in ```onPermissionBlocked``` method to inform and navigate user to settings screen to enable blocked permissions.
 
 ```kotlin
@@ -146,7 +146,7 @@ override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<Str
 }
 ```
 
-##### Step 6:
+#####Step 6:
 Call ```onActivityResult()``` method with same parameter ```(requestCode)``` which is received in onActivityResult method of activity. Permissionmanager will handle and recheck when user returned from Settings screen after enabling required permissions.
 ```kotlin 
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -156,19 +156,19 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
 }
 ```
 
-##### Step 7:
+#####Step 7:
 Call ```checkAndRequestPermissions()``` method in onCreate or where ever you want to access features which require permissions.
 ```kotlin
 mPermissionManager.checkAndRequestPermissions() 
 ```
 
-##### Optional
+#####Optional
 You can enable or disable logs in PermissionManager using below line code. By default, logs are desiabled.
 ```kotlin
 mPermissionManager.enableLogs(true) 
 ```
 
-### Licence
+###Licence
  Copyright [2018] [Keshav Kumar Verma]
 
    Licensed under the Apache License, Version 2.0 (the "License");
